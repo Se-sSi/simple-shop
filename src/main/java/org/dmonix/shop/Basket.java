@@ -1,11 +1,6 @@
 package org.dmonix.shop;
 
-import sun.tools.jconsole.inspector.XObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,14 +28,14 @@ public class Basket {
       int total_cost = 0;
       int total_product_cost = total_cost + (p.getMyCost() * p.getMyQuantity());
       total_final_cost += total_product_cost;
+      System.out.println("Basket:");
       System.out.println(p.getMyQuantity() + " " + p.product_name() + "s " + total_product_cost + "Kr");
     }
     if (basket_products.isEmpty()){
       System.out.println("Basket is empty");
     }
     else{
-      System.out.println("Basket:");
-      System.out.println("Total cost:" + total_final_cost);
+      System.out.println("Total cost:" + total_final_cost + "Kr");
     }
 
 
@@ -84,18 +79,21 @@ public class Basket {
     }
 
   public void remove_empty() {
-    for(Product p : basket_products) {
-      if (p.getMyQuantity() == 0) {
-      basket_products.remove(p);
+      for(Product p : basket_products) {
+        if (p.getMyQuantity() == 0) {
+          basket_products.remove(p);
+        }
     }
-    }
-//    if (Product p.getMyQuantity() == 0) {
-//      basket_products.remove(p);
-//    }
     }
 
+
   public void remove_all() {
-    basket_products.clear();
+    if (basket_products.isEmpty()){
+    }
+    else{
+      basket_products.clear();
+    }
+
   }
 }
 

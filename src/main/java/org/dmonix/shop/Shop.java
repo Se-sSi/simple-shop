@@ -18,7 +18,7 @@ public class Shop {
 
   public void printProducts() {
     for(Product p : store_products){
-      System.out.println(p.toString() + "s");
+      System.out.println(p.toString());
     }
   }
 

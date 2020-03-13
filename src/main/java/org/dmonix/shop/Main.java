@@ -77,7 +77,7 @@ public class Main {
     if (myBasket.cacheoutprice() != 0) {
       myBasket.remove_empty();
       myBasket.displayProducts();
-      System.out.println("are you sure you want to cach out?");
+      System.out.println("are you sure you want to cash out?");
       System.out.println("1. yes");
       System.out.println("2. no");
       switch (getUserInput()){
@@ -119,6 +119,10 @@ public class Main {
   }
 
   private static void empty_basket() {
+    if (myBasket.basketproducts().isEmpty()){
+      System.out.println("your basket is already empty");
+    }
+    else{
     System.out.println("are you sure?");
     System.out.println("1. yes");
     System.out.println("2. no");
@@ -131,41 +135,44 @@ public class Main {
         break;
     }
 
+    }
+
   }
 
   private static void remove_basket_items() {
-    int product_amount;
-    myBasket.remove_empty();
-    myBasket.list_basket_products();
-    System.out.println("What product do you wat to remove?");
-    int id = getUserInput();
-    Product p = myBasket.getProduct(String.valueOf(id));
-    System.out.println("how many " + p.product_name() + "s do you want to remove?");
-    product_amount = getUserInput();
-    if (p != null) {
-      if (product_amount <= p.getMyQuantity()){
-        myBasket.removeProduct(p, product_amount);
-        myBasket.remove_empty();
-        myBasket.displayProducts();
-      }
-      else {
-        if (product_amount > 1) {
-          System.out.println("There are not " + product_amount + " " + p.product_name() + "s in the basket");
-          System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + "s in your basket");
-        }
-        else {
-          System.out.println("There are not " + product_amount + " " + p.product_name() + " in the basket");
-          System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + " in your basket");
-        }
-
-
-      }
+    if (myBasket.basketproducts().isEmpty()){
+      System.out.println("your baskt is already empty");
     }
     else {
-      System.out.println("Product does not exist");
-    }
+      int product_amount;
+      myBasket.remove_empty();
+      myBasket.list_basket_products();
+      int id = getUserInput();
+      Product p = myBasket.getProduct(String.valueOf(id));
+      System.out.println("how many " + p.product_name() + "s do you want to remove?");
+      product_amount = getUserInput();
+      if (p != null) {
+        if (product_amount <= p.getMyQuantity()) {
+          myBasket.removeProduct(p, product_amount);
+          myBasket.remove_empty();
+          myBasket.displayProducts();
+        } else {
+          if (product_amount > 1) {
+            System.out.println("There are not " + product_amount + " " + p.product_name() + "s in the basket");
+            System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + "s in your basket");
+          } else {
+            System.out.println("There are not " + product_amount + " " + p.product_name() + " in the basket");
+            System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + " in your basket");
+          }
 
-    return;
+
+        }
+      } else {
+        System.out.println("Product does not exist");
+      }
+
+      return;
+    }
   }
 
   private static void shop() {
@@ -202,26 +209,31 @@ public class Main {
     Product p = myShop.getProduct(String.valueOf(id));
     System.out.println("how many " + p.product_name() + "s do do you want");
     product_amount = getUserInput();
-    if (p != null) {
-      if (product_amount <= p.getMyQuantity()){
-        myBasket.buyProduct(p, product_amount);
-        myBasket.displayProducts();
+    if (product_amount > 0){
+      if (p != null) {
+        if (product_amount <= p.getMyQuantity()){
+          myBasket.buyProduct(p, product_amount);
+          myBasket.displayProducts();
 
+        }
+        else{
+          if (product_amount > 1) {
+            System.out.println("There are not " + product_amount + " " + p.product_name() + "s in the storage");
+            System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + "s in storage");
+          }
+          else {
+            System.out.println("There are not " + product_amount + " " + p.product_name() + " in the storage");
+            System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + " in storage");
+          }
+        }
+        myBasket.remove_empty();
+        System.out.println(myBasket.list_products());
+      } else {
+        System.out.println("Product does not exist");
       }
-    else{
-      if (product_amount > 1) {
-        System.out.println("There are not " + product_amount + " " + p.product_name() + "s in the storage");
-        System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + "s in storage");
-      }
-      else {
-        System.out.println("There are not " + product_amount + " " + p.product_name() + " in the storage");
-        System.out.println("There are only " + p.getMyQuantity() + " " + p.product_name() + " in storage");
-      }
-      }
-      myBasket.remove_empty();
-      System.out.println(myBasket.list_products());
-    } else {
-      System.out.println("Product does not exist");
+    }
+    else {
+      System.out.println("You need to buy atleast 1 " + p.product_name());
     }
   }
 
