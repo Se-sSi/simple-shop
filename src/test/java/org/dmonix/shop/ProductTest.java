@@ -8,7 +8,8 @@ import org.junit.Test;
 public class ProductTest {
   @Test
   public void createProductInstance() {
-    Product product = new Product("123", "MyProduct", 69);
+    Product product = new Product("123", "MyProduct", 69, 50);
+
     //TODO there is no assertion here, poor test case. Add some assertions that the values set in the constructor are stored on the product instance
   }
 }
